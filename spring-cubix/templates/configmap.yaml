@@ -1,0 +1,10 @@
+{{- if .Values.configMap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spring-cubix.fullname" . }}
+  labels:
+    {{- include "spring-cubix.labels" . | nindent 4 }}
+data:
+{{ (.Files.Glob (print .Values.configMap.directory "/*")).AsConfig | indent 2 }}
+{{- end }}

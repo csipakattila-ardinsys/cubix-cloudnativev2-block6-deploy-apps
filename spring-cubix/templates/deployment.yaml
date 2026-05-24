@@ -25,12 +25,23 @@ spec:
       serviceAccountName: {{ include "spring-cubix.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.configMap.enabled (eq .Values.configMap.as "file") }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "spring-cubix.fullname" . }}
+      {{- end }}
       containers:
         - name: {{ .Release.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if and .Values.configMap.enabled (eq .Values.configMap.as "file") }}
+          volumeMounts:
+            - mountPath: /opt/app/config
+              name: config
+          {{- end }}
           startupProbe:
             periodSeconds: 5
             failureThreshold: 5
@@ -56,6 +67,11 @@ spec:
           {{- range .Values.env }}
           - name: {{ .name }}
             value: {{ .value | quote }}
+          {{- end }}
+          {{- if and .Values.configMap.enabled (eq .Values.configMap.as "env") }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "spring-cubix.fullname" . }}
           {{- end }}
           ports:
             - name: http

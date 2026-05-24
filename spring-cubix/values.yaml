@@ -1,3 +1,8 @@
+configMap:
+  enabled: false
+  directory: configuration
+  as: ""
+
 replicaCount: 1
 
 image:

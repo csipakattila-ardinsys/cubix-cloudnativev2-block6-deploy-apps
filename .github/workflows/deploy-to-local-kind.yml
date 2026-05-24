@@ -13,8 +13,13 @@ jobs:
         env:
           POSTGRESQL_PASSWORD: ${{ secrets.POSTGRESQL_PASSWORD }}
         run: |
+          mkdir spring-cubix/configuration
+          cp api.properties spring-cubix/configuration/application.properties
           helm upgrade api spring-cubix --install -f api.yaml -n cubix
-          helm upgrade db spring-cubix --install -f db.yaml -n cubix --set env[2].value="$env:POSTGRESQL_PASSWORD"
+          mkdir spring-cubix/configuration
+          cp db.properties spring-cubix/configuration/application.properties
+          helm upgrade db spring-cubix --install -f db.yaml -n cubix --set env[0].value="$env:POSTGRESQL_PASSWORD"
+          rm -r spring-cubix/configuration
 # Swap commenting if your self-hosted agent is on Linux or on MacOS
 #  deploy-linux:
 #    runs-on: [self-hosted, linux, macOS]

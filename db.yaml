@@ -4,11 +4,11 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
+configMap:
+  enabled: true
+  as: "file"
+
 env:
-- name: SPRING_DATASOURCE_URL
-  value: jdbc:postgresql://postgresql:5432/postgres
-- name: SPRING_DATASOURCE_USERNAME
-  value: user
 - name: SPRING_DATASOURCE_PASSWORD
   #value: <<SET WITH INSTALLATION>>
 
