@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "spring-cubix.fullname" . }}
+  labels:
+    {{- include "spring-cubix.labels" . | nindent 4 }}
+spec:
+  podMetricsEndpoints:
+    - port: management
+      path: /actuator/prometheus
+  selector:
+    matchLabels:
+      {{- include "spring-cubix.selectorLabels" . | nindent 6 }}

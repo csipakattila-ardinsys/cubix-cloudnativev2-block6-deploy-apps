@@ -18,3 +18,9 @@ kubectl create secret generic db-password --from-literal password=password --nam
 kubectl label secret/db-password app.kubernetes.io/instance=db --namespace cubix
 helm upgrade db spring-cubix --install -f db.yaml -n cubix
 ```
+
+# How to label the namespace for monitoring
+
+```shell
+kubectl label ns/cubix monitoring=true
+```
