@@ -71,9 +71,9 @@ spec:
           {{- range .Values.secret }}
           - name: {{ .envName }}
             valueFrom:
-              - secretKeyRef:
-                  name: {{ .secretName }}
-                  key: {{ .secretKey }}
+              secretKeyRef:
+                name: {{ .secretName }}
+                key: {{ .secretKey }}
           {{- end }}
           {{- if and .Values.configMap.enabled (eq .Values.configMap.as "env") }}
           envFrom:
