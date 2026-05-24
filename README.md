@@ -14,5 +14,7 @@ Replace password (with the value of Postgres password)
 
 ```shell
 #helm upgrade db spring-cubix --install -f db.yaml -n cubix --set env[2].value=<ENTER-PASSWORD>
+kubectl create secret generic db-password --from-literal password=password --namespace cubix --save-config
+kubectl label secret/db-password app.kubernetes.io/instance=db --namespace cubix
 helm upgrade db spring-cubix --install -f db.yaml -n cubix
 ```
