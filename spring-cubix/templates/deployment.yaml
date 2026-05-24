@@ -68,6 +68,13 @@ spec:
           - name: {{ .name }}
             value: {{ .value | quote }}
           {{- end }}
+          {{- range .Values.secret }}
+          - name: {{ .envName }}
+            valueFrom:
+              - secretKeyRef:
+                  name: {{ .secretName }}
+                  key: {{ .secretKey }}
+          {{- end }}
           {{- if and .Values.configMap.enabled (eq .Values.configMap.as "env") }}
           envFrom:
             - configMapRef:
