@@ -3,6 +3,8 @@ configMap:
   directory: configuration
   as: ""
 
+openTelemetry: {}
+
 replicaCount: 1
 
 image:

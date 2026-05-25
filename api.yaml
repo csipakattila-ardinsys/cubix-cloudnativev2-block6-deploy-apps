@@ -8,6 +8,9 @@ configMap:
   enabled: true
   as: "file"
 
+openTelemetry:
+  targetUrl: http://tempo.tools:4317
+
 ingress:
   enabled: true
   hosts:

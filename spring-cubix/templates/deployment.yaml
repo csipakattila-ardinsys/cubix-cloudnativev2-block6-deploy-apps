@@ -64,6 +64,12 @@ spec:
             value: {{ .Values.javaOpts | quote }}
           - name: MANAGEMENT_SERVER_PORT
             value: "9080"
+          - name: OTEL_SERVICE_NAME
+            value: {{ include "spring-cubix.fullname" . }}
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: {{ required "OpenTelemetry target URL is required!" .Values.openTelemetry.targetUrl }}
+          - name: OTEL_METRICS_EXPORTER
+            value: none
           {{- range .Values.env }}
           - name: {{ .name }}
             value: {{ .value | quote }}
